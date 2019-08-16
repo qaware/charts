@@ -1,0 +1,11 @@
+apiVersion: v1
+appVersion: "0.3.0"
+description: A Helm chart for Reflector
+name: reflector
+version: 0.3.0
+home: https://github.com/qaware/charts
+maintainers:
+  - name: akowasch
+    email: andreas.kowasch@syncier.com
+  - name: apleuss
+    email: andreas.pleuss@syncier.com

@@ -1,0 +1,96 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "reflector.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "reflector.name" . }}
+    helm.sh/chart: {{ include "reflector.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "reflector.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "reflector.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+
+      {{- with .Values.podAnnotations }}
+      annotations:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+
+    spec:
+      serviceAccountName: {{ include "reflector.fullname" . }}
+      containers:
+
+        {{- $containers := dict "watch-namespaces" "[\"/watch-namespaces\"]" "watch-secrets" "[\"/watch-objects\", \"Secret\"]" "watch-configmaps" "[\"/watch-objects\", \"ConfigMap\"]" -}}
+
+        {{- range $name, $command := $containers }}
+        - name: {{ $name }}
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          command: {{ $command }}
+
+          {{- with $.Values.resources }}
+          resources:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+
+          env:
+          {{- with $.Values.reflector.verbose }}
+          - name: VERBOSE
+            value: {{ . | quote }}
+          {{- end }}
+          {{- with $.Values.reflector.dry_run }}
+          - name: DRY_RUN
+            value: {{ . | quote }}
+          {{- end }}
+          {{- with $.Values.reflector.label_key }}
+          - name: LABEL_KEY
+            value: {{ . }}
+          {{- end }}
+        {{- end }}
+
+        - name: garbage-collector
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/garbage-collector"]
+
+          {{- with .Values.resources }}
+          resources:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+
+          env:
+          {{- with .Values.reflector.dry_run }}
+          - name: DRY_RUN
+            value: {{ . | quote }}
+          {{- end }}
+          {{- with .Values.reflector.gc_sleep }}
+          - name: SLEEP
+            value: {{ . | quote }}
+          {{- end }}
+          {{- with .Values.reflector.label_key }}
+          - name: LABEL_KEY
+            value: {{ . | quote }}
+          {{- end }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+
+      {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+
+      {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+      {{- end }}

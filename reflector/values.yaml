@@ -1,0 +1,29 @@
+image:
+  repository: quay.io/qaware/reflector
+  tag: 0.3.0
+  pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+
+resources: {}
+#  limits:
+#    cpu: 100m
+#    memory: 32Mi
+#  requests:
+#    cpu: 100m
+#    memory: 32Mi
+
+reflector:
+  verbose: "false"
+  dry_run: "false"
+  label_key: reflector-class
+  gc_sleep: 1800
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
