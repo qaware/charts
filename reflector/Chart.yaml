@@ -2,7 +2,7 @@ apiVersion: v1
 appVersion: "0.3.0"
 description: A Helm chart for Reflector
 name: reflector
-version: 0.3.0
+version: 0.3.1
 home: https://github.com/qaware/charts
 maintainers:
   - name: akowasch

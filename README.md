@@ -3,4 +3,4 @@ Public QAware Helm chart repository
 
 Chart | Version | Description 
 --- | --- | ---
-Reflector | 0.3.0 | Synchronizes secrets and configmaps across namespaces
+Reflector | 0.3.1 | Synchronizes secrets and configmaps across namespaces
