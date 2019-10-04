@@ -3,7 +3,22 @@ entries:
   reflector:
   - apiVersion: v1
     appVersion: 0.3.0
-    created: 2019-08-16T22:08:33.820655+02:00
+    created: 2019-10-04T15:26:16.929588+02:00
+    description: A Helm chart for Reflector
+    digest: 58616aa2acfcf465cef60ce5da77cf93aa6c3a261a9af3a0340bc8dad7571bb1
+    home: https://github.com/qaware/charts
+    maintainers:
+    - email: andreas.kowasch@syncier.com
+      name: akowasch
+    - email: andreas.pleuss@syncier.com
+      name: apleuss
+    name: reflector
+    urls:
+    - https://qaware.github.io/charts/reflector-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v1
+    appVersion: 0.3.0
+    created: 2019-10-04T15:26:16.929298+02:00
     description: A Helm chart for Reflector
     digest: 6a1de27335c134055fa2f6c46271947ab7f1f62ea85381251f4fb5c15e11597f
     home: https://github.com/qaware/charts
@@ -16,4 +31,4 @@ entries:
     urls:
     - https://qaware.github.io/charts/reflector-0.3.0.tgz
     version: 0.3.0
-generated: 2019-08-16T22:08:33.819807+02:00
+generated: 2019-10-04T15:26:16.928556+02:00
