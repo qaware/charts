@@ -16,6 +16,6 @@ helm package <name>
 git checkout gh-pages
 helm repo index . --url https://qaware.github.io/charts/
 git add .
-git commit -m "Add reflector-0.3.1 chart"
+git commit -m "Add <name>-<version> chart"
 git push
 ```
